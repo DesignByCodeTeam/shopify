@@ -1,0 +1,52 @@
+<section class="wrapper">
+  <h1 class="text-7xl font-black tracking-tight mb-4">
+    {{ section.settings.collection_heading }}
+  </h1>
+  <div class="prose max-w-full my-4">
+    {{ section.settings.collection_subtext }}
+  </div>
+  <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+  {%- for product in section.settings.collection.products limit: section.settings.collection_count -%}
+    {% render 'card-product', product: product %}
+  {% endfor %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Featured Collection",
+  "settings": [
+    {
+      "type": "text",
+      "id": "collection_heading",
+      "label": "Collection Heading",
+      "default": "Featured Collection"
+    },
+    {
+      "type": "richtext",
+      "id": "collection_subtext",
+      "label": "Collection Sub Text",
+      "default": "<p>Lorem ipsum dolor sit amet, <strong>consectetur</strong> adipisicing elit. Enim id quod vel veniam voluptas. Debitis dolorem, eum id obcaecati odit pariatur porro repellendus vero. Accusamus ad cumque sapiente sed voluptatem.</p>"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "collection"
+    },
+    {
+      "type": "range",
+      "id": "collection_count",
+      "label": "Show collection count",
+      "min": 4,
+      "max": 12,
+      "step": 2,
+      "default": 4
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured Collection"
+    }
+  ]
+}
+{% endschema %}

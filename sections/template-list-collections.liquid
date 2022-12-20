@@ -1,0 +1,21 @@
+
+{% paginate collections by 24 %}
+  <div class="grid gap-8 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 w-full">
+    {% for collection in collections %}
+      {% render 'card-collection', collection: collection %}
+    {% endfor %}
+  </div>
+  <div class="block my-12 text-center">
+    {% if paginate.pages > 1 %}
+      {{ paginate | default_pagination }}
+    {% endif %}
+  </div>
+{% endpaginate %}
+
+{% schema %}
+{
+  "name": "Template List Collections",
+  "tag": "section",
+  "class": "wrapper my-24"
+}
+{% endschema %}

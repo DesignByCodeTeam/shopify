@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer componets {
+    .wrapper {
+        @apply max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8;
+    }
+
+
+    .dotted {
+        position: relative;
+        background: theme("colors.white");
+        filter: contrast(9);
+        --mask: linear-gradient(white, transparent);
+    }
+
+    .dotted::before {
+        position: absolute;
+        top: 0; right: 0; bottom: 0; left: 0;
+        background: radial-gradient(#000, transparent) 0 0/ 1em 1em space;
+        -webkit-mask: var(--mask);
+        mask: var(--mask);
+        content: ''
+    }
+}

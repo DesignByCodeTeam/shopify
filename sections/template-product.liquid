@@ -1,0 +1,87 @@
+{% assign selected_variant = product.selected_or_first_available_variant %}
+
+<div class="grid md:grid-cols-2 gap-8">
+  <div class="gap-5 grid">
+    {% for media in product.media %}
+      <div class="h-100 overflow-hidden">
+        {% render 'product-media', media: media %}
+      </div>
+    {% endfor %}
+  </div>
+
+  <div class="p-8 border border-gray-300 rounded space-y-5 relative">
+    <div class="sticky top-12 space-y-4">
+      <i
+        class="px-2 py-0.5 text-sm text-gray-500 rounded-md border border-gray-300 bg-gray-200">{{ product.vendor }}</i>
+      <h2 class="text-3xl font-bold">{{ product.title }}</h2>
+      <div>
+        {{ product.description }}
+      </div>
+      <div>
+
+        {% form 'product', product, id: 'product-form', novalidate: 'novalidate' %}
+          <input type="hidden" id="id" name="id" value="{{ selected_variant.id }}">
+          <div>
+            {% unless product.has_only_default_variant %}
+              <variant-selector data-url="{{ product.url }}" data-section="{{ section.id }}">
+                <div class="flex flex-col space-y-2">
+                  {% for option in product.options_with_values %}
+                    <label class="w-full font-bold"
+                           for="option-{{ section.id }}-{{ forloop.index0 }}">{{ option.name }}</label>
+                    <select class="w-full rounded" name="{{ option.name | escape }}"
+                            id="option-{{ section.id }}-{{ forloop.index0 }}">
+                      {% for value in option.values %}
+                        <option value="{{ value | escape }}"
+                          {% if option.selected_value == value %}
+                            selected
+                          {% endif %}
+                        >{{ value | escape }}</option>
+                      {% endfor %}
+                    </select>
+
+                    <script type="application/json">
+                      {{ product.variants | json }}
+                    </script>
+
+                  {% endfor %}
+                </div>
+              </variant-selector>
+            {% endunless %}
+            <div class="flex flex-col my-2 space-y-2">
+              <label class="w-full font-bold" for="quantity-{{ section.id }}">Quantity</label>
+              <input class="w-full rounded" type="number" name="quantity" id="quantity-{{ section.id }}" value="1" min="1">
+            </div>
+          </div>
+          <div class="flex space-x-4 items-center" id="price-{{ section.id }}">
+            <div
+              class="font-bold line-through text-red-400 tracking-wide my-3 inline-block">{{ selected_variant.compare_at_price | money }} </div>
+            <div class="font-bold tracking-wide my-3 inline-block">{{ selected_variant.price | money }} </div>
+            {% if selected_variant.price < selected_variant.compare_at_price %}
+              <span class="rounded-full border-blue-500 bg-blue-500 text-white px-2">On sale</span>
+            {% endif %}
+          </div>
+          <button name="add" class="px-6 py-2 rounded-md bg-primary-500 text-white hover:bg-primary-400" type="submit"
+            {% if selected_variant.available == false %}
+              disabled
+            {% endif %}
+          >
+
+            {% if selected_variant.available == false %}
+              Sold out
+            {% else %}
+              Add to cart
+            {% endif %}
+          </button>
+        {% endform %}
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% schema %}
+{
+  "name": "Template Product",
+  "class": "wrapper"
+}
+{% endschema %}

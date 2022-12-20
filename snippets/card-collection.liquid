@@ -1,0 +1,12 @@
+<a href="{{ collection.url | uri_escape }}" class="rounded-md bg-white block border border-gray-300 p-5">
+
+  {% if collection.featured_image != blank %}
+    {{ collection | image_url: width: 400, height: 300, crop: 'center' | image_tag: class: 'w-full aspect-square object-contain' }}
+  {% else %}
+    {{ 'collection-2' | placeholder_svg_tag: 'w-full aspect-square' }}
+  {% endif %}
+
+  <header>
+    {{ collection.title }}
+  </header>
+</a>

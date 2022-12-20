@@ -1,0 +1,48 @@
+{%- paginate blog.articles by section.settings.pagination_count -%}
+<div class="relative lg:ml-[calc(16rem+2px)]">
+  <div class="-inset-y-4 w-px -left-[3rem] bg-gray-500/20 absolute hidden lg:block mx-auto"></div>
+  {% for article in blog.articles %}
+    <div class="mb-24 relative group">
+      <svg aria-hidden="true" class="h-8 w-8 hidden lg:block fill-primary-100 group-hover:fill-gray-100 stroke-primary-500 stroke-2 absolute top-2 -left-[calc(3rem+6px)]">
+        <circle cx="7" cy="7" r="6" />
+      </svg>
+      <h3 class="text-xl font-bold line-clamp-2">{{ article.title | capitalize }}</h3>
+      <time class="lg:right-full lg:mr-[calc(5rem+1px)] whitespace-nowrap text-right lg:opacity-50 font-bold top-1 lg:absolute inline-block" datetime="{{ article.published_at }}">{{ article.published_at |date: "%d %B %y" }}</time>
+      <div class="line-clamp-3">
+        {% if article.excerpt != blank %}
+          {{ article.excerpt }}
+        {% else %}
+          {{ article.content | truncatewords: 30 }}
+        {% endif %}
+      </div>
+      <a class="text-primary-500 hover:underline" href="{{ article.url }}">
+        Read more &rightarrow;
+        <span class="absolute -inset-4 group-hover:border border-gray-500/50 group-hover:bg-gray-500/30  rounded-md"></span>
+      </a>
+    </div>
+  {% endfor %}
+</div>
+
+<div class="block my-12 text-center">
+  {% if paginate.pages > 1 %}
+    {{ paginate | default_pagination }}
+  {% endif %}
+</div>
+
+{%- endpaginate -%}
+{% schema %}
+{
+  "name": "Template Blog",
+  "settings": [
+    {
+      "type": "range",
+      "id": "pagination_count",
+      "label": "Pagination Count",
+      "default": 4,
+      "min": 4,
+      "max": 20,
+      "step": 4
+    }
+  ]
+}
+{% endschema %}

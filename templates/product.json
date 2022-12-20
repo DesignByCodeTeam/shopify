@@ -1,0 +1,11 @@
+{
+  "name": "Template Product",
+  "layout": "theme",
+  "wrapper": "section",
+  "sections": {
+    "page-product": {
+      "type": "template-product"
+    }
+  },
+  "order": ["page-product"]
+}

@@ -1,0 +1,68 @@
+
+
+<section>
+  <figure>
+    {% if article.image != blank %}
+      {{ article | image_url: width: 800, height: 230, crop: 'center' | image_tag: class: 'mx-auto rounded-md shadow-2xl mb-12 block bg-gray-200', loading: 'lazy' }}
+    {% else %}
+      {{ 'lifestyle-1' | placeholder_svg_tag: 'mx-auto rounded-md shadow-2xl mb-12 block bg-gray-200 p-8 overflow-hidden'}}
+    {% endif %}
+  </figure>
+  <h1
+      class="text-2xl font-extrabold tracking-tight text-slate-700 md:text-3xl my-4 text-center">
+    {{ article.title }}
+  </h1>
+  <h3 class="text-center font-bold text-gray-500 flex items-center justify-center space-x-3">
+    <img loading="lazy" class="rounded-full shadow inline-block overflow-hidden h-10 w-10"
+         src="https://www.gravatar.com/avatar/{{ article.email | md5 }}" alt="{{ article.author }}">
+    <span>
+     {{ article.author }}
+    </span>
+  </h3>
+  <div class="flex justify-center">
+    <time class="my-2 inline-block text-gray-500 italic"
+          datetime="{{ article.created_at }}">{{ article.created_at | date: "%d %B %Y" }}</time>
+  </div>
+
+  <ul role="list" class="flex justify-center my-4">
+    {% for tag in article.tags %}
+      <li
+        class="[&>a]:inline-block [&>a]:block [&>a]:px-2 [&>a]:py-0.5 [&>a]:text-sm [&>a]:text-gray-400 m-1 [&>a]:rounded-md [&>a]:border [&>a]:border-gray-300 [&>a]:hover:bg-gray-200">
+        {{ tag | link_to_tag: tag }}
+      </li>
+    {% endfor %}
+  </ul>
+  <div class="prose mx-auto">
+    {{ article.content }}
+  </div>
+</section>
+
+{% if blog.comments_enabled? %}
+  {% render 'comments', article: article %}
+{% endif %}
+
+{% schema %}
+{
+  "name": "Template Article"
+}
+{% endschema %}
+
+<script type="application/ld+json">
+{
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": {{ article.title | json }},
+      "articleBody": {{ article.content | strip_html | json }},
+      {% if article.image != blank %}
+        "image": [
+          {{ article | image_url: width: 800, height: 230, crop: 'center' | json }}
+         ],
+      {%endif%}
+      "datePublished": {{ article.created_at | json }},
+      "dateModified": {{ article.updated_at | json }},
+      "author": [{
+          "@type": "Person",
+          "name": "{{ article.author }}"
+        }]
+}
+</script>

@@ -1,0 +1,5 @@
+.prettierrc
+/src/*
+package.json
+pnpm-lock.yaml
+*.config.json

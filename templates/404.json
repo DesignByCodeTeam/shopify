@@ -1,0 +1,11 @@
+{
+  "name": "Template 404",
+  "layout": "theme",
+  "wrapper": "section.wrapper.py-32",
+  "sections": {
+    "page-404": {
+      "type": "template-404"
+    }
+  },
+  "order": ["page-404"]
+}

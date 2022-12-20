@@ -1,0 +1,16 @@
+<h1 class="text-5xl font-bold">Cart</h1>
+
+{% if cart.item_count > 0 %}
+
+{% else %}
+  <div class="text-4xl font-bold text-center">
+    You have no items in your cart {{ cart.item_count }}
+  </div>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Template Cate",
+  "class": "wrapper"
+}
+{% endschema %}

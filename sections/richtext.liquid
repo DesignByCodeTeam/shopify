@@ -1,0 +1,22 @@
+{{ section.settings.richtext }}
+
+{% schema %}
+{
+  "name": "RichText",
+  "tag": "section",
+  "class": "section wrapper my-12",
+  "settings": [
+    {
+      "type" :"richtext",
+      "id": "richtext",
+      "default": "<p>Lorem ipsum dolor sit amet,</p>",
+      "label": "Rich Text"
+    }
+  ],
+  "presets": [
+    {
+      "name": "RichText"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,11 @@
+{
+  "name": "Page Cart",
+  "layout": "theme",
+  "wrapper": "section",
+  "sections": {
+    "cart-template": {
+      "type": "template-cart"
+    }
+  },
+  "order": ["cart-template"]
+}

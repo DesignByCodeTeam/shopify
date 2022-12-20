@@ -1,0 +1,36 @@
+{% paginate search.results by 10 %}
+
+  <form action="{{ routes.search }}" method="get" role="search">
+    <label for="search" class="w-full font-bold mb-2">Search</label>
+    <div class="flex space-x-2 mb-4">
+      <input id="search" class="rounded-md w-full" type="search" name="q" value="{{ search.terms | escape }}">
+      <button class="px-8 py-1 rounded-md bg-primary-500 text-white" type="submit">Search</button>
+    </div>
+  </form>
+
+  {% if search.performed %}
+    {% for item in search.results %}
+      <a class="flex mb-4 items-start relative hover:bg-gray-200 p-2" href="{{ item.url }}">
+        {% if item.featured_image %}
+          {{ item.featured_image.src | image_url: width: 120, height: 120 | image_tag: class: 'h-24 w-24 object-cover shrink-0 mr-4 rounded-md', loading: 'lazy' }}
+        {% endif %}
+        <div>
+          <h5 class=" font-bold line-clamp-1">{{ item.title }}</h5>
+          <p class="line-clamp-2">{{ item.content | strip_html | truncatewords: 30 }}</p>
+        </div>
+      </a>
+    {% else %}
+      no results
+    {% endfor %}
+  {% endif %}
+
+  {% if paginate.pages > 1 %}{{ paginate | default_pagination }}{% endif %}
+{% endpaginate %}
+
+
+{% schema %}
+{
+  "name": "Template Search",
+  "class": "wrapper"
+}
+{% endschema %}

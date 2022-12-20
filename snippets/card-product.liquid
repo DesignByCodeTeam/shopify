@@ -1,0 +1,20 @@
+<a href="{{ product.url | uri_escape }}" class="rounded-md bg-white block border border-gray-300 p-5">
+  <picture>
+    {% if product.featured_image != blank %}
+      {{ product | image_url: width: 400, height: 400, crop: 'center' | image_tag: class: 'w-full aspect-square' }}
+    {% else %}
+      {{ 'collection-1' | placeholder_svg_tag: 'w-full aspect-square' }}
+    {% endif %}
+  </picture>
+  <header>
+    {{ product.title }}
+  </header>
+  <section>
+    {{ product.price | money }}
+  </section>
+  {% unless product.available %}
+    <footer class="text-red-500 font-bold uppercase">
+      sold out
+    </footer>
+  {% endunless %}
+</a>

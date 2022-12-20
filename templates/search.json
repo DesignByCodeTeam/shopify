@@ -1,0 +1,11 @@
+{
+  "name": "Page Search",
+  "layout": "theme",
+  "wrapper": "section",
+  "sections": {
+    "search-template": {
+      "type": "template-search"
+    }
+  },
+  "order": ["search-template"]
+}

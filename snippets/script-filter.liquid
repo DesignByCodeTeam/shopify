@@ -1,0 +1,18 @@
+<script defer>
+    Shopify.queryParams = {};
+    // Preserve existing query parameters
+    if (location.search.length) {
+        const params = location.search.substring(1).split('&');
+        for (let i = 0; i < params.length; i++) {
+            let keyValue = params[i].split('=');
+            if (keyValue.length) {
+                Shopify.queryParams[decodeURIComponent(keyValue[0])] = decodeURIComponent(keyValue[1]);
+            }
+        }
+    }
+    // Update sort_by query parameter on select change
+    document.querySelector('#sort-by').addEventListener('change', function (e) {
+        Shopify.queryParams.sort_by = e.target.value;
+        location.search = new URLSearchParams(Shopify.queryParams).toString();
+    });
+</script>

@@ -1,0 +1,11 @@
+{
+  "name": "Template Article",
+  "layout": "theme",
+  "wrapper": ".wrapper",
+  "sections": {
+    "page-article": {
+      "type": "template-article"
+    }
+  },
+  "order": ["page-article"]
+}

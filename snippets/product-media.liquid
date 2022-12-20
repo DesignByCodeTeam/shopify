@@ -1,0 +1,12 @@
+{% case media.media_type %}
+  {% when "image" %}
+    {{ media | image_url: width: 800, height: 800 | image_tag: class: "w-full border border-gray-300 rounded-md", loading: "lazy" }}
+  {% when "external_video" %}
+    {{ media | external_video_tag: class: "w-full aspect-video" }}
+  {% when "video" %}
+    {{ media | video_tag: class: "w-full aspect-video", controls: true }}
+  {% when "model" %}
+    {{ media | model_viewer_tag: class: "w-full h-[600px] aspect-square bg-white" }}
+  {% else %}
+    {{ media | media_tag: class: "w-full aspect-video" }}
+{% endcase %}

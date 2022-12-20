@@ -1,0 +1,11 @@
+{
+  "name": "Page Collections",
+  "layout": "theme",
+  "wrapper": "section",
+  "sections": {
+    "page-collection": {
+      "type": "template-collection"
+    }
+  },
+  "order": ["page-collection"]
+}

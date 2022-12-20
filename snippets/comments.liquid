@@ -1,0 +1,64 @@
+<div class="w-full mx-auto max-w-[65ch] my-8">
+  <h2 class="text-3xl mb-4">Comments</h2>
+  {% if article.comments_count > 0 %}
+    {% paginate article.comments by 20 %}
+      {% for comment in article.comments %}
+        <div class="flex text-sm text-gray-500 space-x-4">
+          <div class="flex-none py-10">
+            <img loading="lazy" class="rounded-full shadow inline-block overflow-hidden h-10 w-10" src="https://www.gravatar.com/avatar/{{ comment.email | md5 }}" alt="{{ comment.author }}">
+
+          </div>
+          <div class="flex-1 py-10 border-t border-gray-200">
+            <h3 class="font-medium text-gray-900">{{ comment.author  }}</h3>
+            <p>
+              <time datetime="2021-07-12">{{ comment.created_at | date: "%d %B %y" }}</time>
+            </p>
+            <div class="mt-4 prose prose-sm max-w-none text-gray-500">
+              {{ comment.content }}
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+      {{ paginate | default_pagination }}
+    {% endpaginate %}
+  {% else %}
+    <p>There no comments</p>
+  {% endif %}
+
+  {% form 'new_comment', article, class: 'space-y-6 rounded-md bg-white shadow p-5 my-8' %}
+    {% if form.errors %}
+      <div class="border border-red-500 bg-red-50 text-red-500 p-5 rounded-md">
+        {{ form.errors | default_errors }}
+      </div>
+    {% elsif form.posted_successfully? %}
+      <div class="border border-green-500 bg-green-50 text-green-500 p-5 rounded-md">
+        Your comment is posted successfully
+      </div>
+    {% endif %}
+    <div>
+      <label for="name" class="block text-sm font-medium text-gray-700"> Name </label>
+      <div class="mt-1">
+        <input value="{{ form.author }}"
+          id="name" name="comment[author]" type="text" autocomplete="email"
+               class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+      </div>
+    </div>
+    <div>
+      <label for="email" class="block text-sm font-medium text-gray-700"> Email address </label>
+      <div class="mt-1">
+        <input value="{{ form.email }}"
+          id="email" name="comment[email]" type="email" autocomplete="email"
+               class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+      </div>
+    </div>
+    <div>
+      <label for="comment" class="block text-sm font-medium text-gray-700">Comment </label>
+      <div class="mt-1">
+        <textarea class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" id="comment" name="comment[body]" cols="30" rows="10">{{ form.body }}</textarea>
+      </div>
+    </div>
+    <div class="submit">
+      <input class="inline-flex items-center px-6 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 cursor-pointer" type="submit" value="Post">
+    </div>
+  {% endform %}
+</div>

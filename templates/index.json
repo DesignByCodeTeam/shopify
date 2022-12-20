@@ -1,0 +1,13 @@
+{
+  "name": "Home Page",
+  "layout": "theme",
+  "wrapper": "section",
+  "sections": {
+    "collection": {
+      "type": "featured-collection"
+    }
+  },
+  "order": [
+    "collection"
+  ]
+}
